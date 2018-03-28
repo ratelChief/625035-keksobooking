@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Dmitry Svistun](https://up.htmlacademy.ru/javascript/13/user/625035).
-* Наставник: `Михаил Баранов`.
+* Наставник: [Михаил Баранов](https://htmlacademy.ru/profile/h4).
 
 ---
 
