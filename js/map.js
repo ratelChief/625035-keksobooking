@@ -144,26 +144,3 @@ for (var i = 0; i < ads.length; i++) {
 document.querySelector('.map-pins').appendChild(fragment);
 var showMap = document.querySelector('.map');
 showMap.classList.remove('map--faded');
-
-//
-//  var similarListElement = document.querySelector('.map__pins');
-//  var mapCardTemplate = document.querySelector('template');
-//
-//  var createPin = function (ad) {
-//  var pin = adElement.querySelector('.map__pin');
-//  var pinStyle = {
-//    left: ad.location.x,
-//    top: ad.location.y
-//  };
-//  pin.style = pinStyle;
-//  var pinIcon = pin.querySelector('img');
-//  pinIcon.src = ad.author.avatar;
-//  pinIcon.alt = ad.offer.title;
-//  };
-//
-//  for (var i = 0; i < ads.length; i++) {
-//  var adElement = mapCardTemplate.cloneNode(true);
-//  createAd(ads[i], i);
-//  similarListElement.appendChild(adElement);
-//  debugger;
-//  }
