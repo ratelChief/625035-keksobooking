@@ -109,6 +109,7 @@ var createAd = function (adsCount) {
     ad.offer.address = getAdress(ad, ad.location.x, ad.location.y);
     ad.offer.photos = PHOTOS;
     ad.offer.description = ' ';
+    ad.index = i;
     ads.push(ad);
   }
 };
@@ -201,8 +202,6 @@ for (var i = 0; i < ads.length; i++) {
   fragment.appendChild(createPinElement(ads[i], pinElement));
 }
 
-renderAdCard(ads[0], cardElement, photoElement);
-
 var form = document.querySelector('.ad-form');
 
 var isFormDisabled = function (switcher) {
@@ -235,11 +234,15 @@ var activatePage = function () {
   mapElement.classList.remove('map--faded');
   form.classList.remove('ad-form--disabled');
   isFormDisabled(false);
+  document.querySelector('.map__pins').appendChild(fragment);
+  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+};
+
+var renderCard = function () {
+  renderAdCard(ads[0], cardElement, photoElement);
 };
 
 mainPin.addEventListener('mouseup', onMainPinMouseUp);
 
-
-//  document.querySelector('.map__pins').appendChild(fragment);
-//
-//  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+var activePin = mapElement.querySelector('.map__pin');
+activePin.addEventListener('click', renderCard);
