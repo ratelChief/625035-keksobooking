@@ -203,6 +203,43 @@ for (var i = 0; i < ads.length; i++) {
 
 renderAdCard(ads[0], cardElement, photoElement);
 
-document.querySelector('.map__pins').appendChild(fragment);
-mapElement.classList.remove('map--faded');
-mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+var form = document.querySelector('.ad-form');
+
+var isFormDisabled = function (switcher) {
+  var disabledInputs = form.querySelectorAll('fieldset');
+  for (i = 0; i < disabledInputs.length; i++) {
+    var disabledInput = disabledInputs[i];
+    disabledInput.disabled = switcher;
+  }
+};
+
+isFormDisabled(true);
+
+var mainPin = document.querySelector('.map__pin--main');
+var startAddress = form.querySelector('#address');
+
+var onMainPinMouseUp = function (evt) {
+  activatePage();
+  startAddress.value = getStartAddress(evt);
+};
+
+var getStartAddress = function (evt) {
+  var startAddressCoords = {
+    x: evt.target.style.left + 80,
+    y: evt.target.style.top + 80
+  };
+  return startAddressCoords.x + ', ' + startAddressCoords.y;
+};
+
+var activatePage = function () {
+  mapElement.classList.remove('map--faded');
+  form.classList.remove('ad-form--disabled');
+  isFormDisabled(false);
+};
+
+mainPin.addEventListener('mouseup', onMainPinMouseUp);
+
+
+//  document.querySelector('.map__pins').appendChild(fragment);
+//
+//  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
