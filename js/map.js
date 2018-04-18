@@ -219,16 +219,14 @@ var setFormState = function (switcher) {
 
 setFormState('disabled');
 
-var mainPin = document.querySelector('.map__pin--main');
+var mapPins = document.querySelector('.map__pins');
 var startAddress = form.querySelector('#address');
 var WIDTH_OF_MAIN_PIN = 160;
 var HEIGHT_OF_MAIN_PIN = 160;
-var activePin = document.querySelector('.map__pin');
 
-var onMainPinMouseUp = function (evt) {
+var onMainPinClick = function (evt) {
   activatePage();
   startAddress.value = getStartAddress(evt);
-  activePin.addEventListener('click', renderCard);
 };
 
 var getStartAddress = function (evt) {
@@ -246,11 +244,15 @@ var activatePage = function () {
   document.querySelector('.map__pins').appendChild(fragment);
 };
 
-var renderCard = function (evt) {
-  if (!evt.currentTarget.classList.contains('.map__pin--main')) {
-    renderAdCard(ads[1], cardElement, photoElement);
-    mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+renderAdCard(ads[1], cardElement, photoElement);
+mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+
+var onMapPinClick = function (evt) {
+
+  if (evt.target.classList.contains('.map__pin--main')) {
+    onMainPinClick(evt);
   }
 };
 
-mainPin.addEventListener('mouseup', onMainPinMouseUp);
+mapPins.addEventListener('click', onMapPinClick);
+
