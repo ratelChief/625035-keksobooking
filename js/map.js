@@ -228,6 +228,7 @@ var activePin = document.querySelector('.map__pin');
 var onMainPinMouseUp = function (evt) {
   activatePage();
   startAddress.value = getStartAddress(evt);
+  activePin.addEventListener('click', renderCard);
 };
 
 var getStartAddress = function (evt) {
@@ -253,4 +254,3 @@ var renderCard = function (evt) {
 };
 
 mainPin.addEventListener('mouseup', onMainPinMouseUp);
-activePin.addEventListener('click', renderCard);
