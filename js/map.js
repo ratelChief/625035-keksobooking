@@ -231,8 +231,8 @@ var onMainPinClick = function (evt) {
 
 var getStartAddress = function (evt) {
   var startAddressCoords = {
-    x: parseInt(evt.currentTarget.style.left, 10) + (WIDTH_OF_MAIN_PIN / 2),
-    y: parseInt(evt.currentTarget.style.top, 10) + (HEIGHT_OF_MAIN_PIN / 2)
+    x: parseInt(evt.target.parentElement.style.left, 10) + (WIDTH_OF_MAIN_PIN / 2),
+    y: parseInt(evt.target.parentElement.style.top, 10) + (HEIGHT_OF_MAIN_PIN / 2)
   };
   return startAddressCoords.x + ', ' + startAddressCoords.y;
 };
@@ -244,13 +244,17 @@ var activatePage = function () {
   document.querySelector('.map__pins').appendChild(fragment);
 };
 
-renderAdCard(ads[1], cardElement, photoElement);
-mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-
 var onMapPinClick = function (evt) {
-
-  if (evt.target.classList.contains('.map__pin--main')) {
-    onMainPinClick(evt);
+  var target = evt.target;
+  var currentTarget = evt.currentTarget;
+  while (target.parentElement !== currentTarget) {
+    if (target.parentElement.classList.contains('map__pin--main')) {
+      onMainPinClick(evt);
+    } else if (!target.parentElement.classList.contains('map__pin--main') || target.parentElement.classList.contains('map__pin')) {
+      renderAdCard(ads[target.parentElement.dataset.indexOfPin], cardElement, photoElement);
+      mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+    }
+    target = target.parentElement;
   }
 };
 
