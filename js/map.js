@@ -193,8 +193,7 @@ var renderAdCard = function (ad, cardElement, photoElement) {
 var template = document.querySelector('template');
 
 var pinElement = template.content.querySelector('.map__pin');
-var cardElement = template.content.querySelector('.map__card').cloneNode(true);
-var photoElement = cardElement.querySelector('.popup__photo');
+
 var mapElement = document.querySelector('.map');
 
 var fragment = document.createDocumentFragment();
@@ -221,6 +220,7 @@ setFormState('disabled');
 
 var mapPins = document.querySelector('.map__pins');
 var startAddress = form.querySelector('#address');
+
 var WIDTH_OF_MAIN_PIN = 160;
 var HEIGHT_OF_MAIN_PIN = 160;
 
@@ -251,8 +251,18 @@ var onMapPinClick = function (evt) {
     if (target.parentElement.classList.contains('map__pin--main')) {
       onMainPinClick(evt);
     } else if (!target.parentElement.classList.contains('map__pin--main') || target.parentElement.classList.contains('map__pin')) {
+      var cardElement = template.content.querySelector('.map__card').cloneNode(true);
+      var photoElement = cardElement.querySelector('.popup__photo');
+
       renderAdCard(ads[target.parentElement.dataset.indexOfPin], cardElement, photoElement);
       mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+
+      var popup = mapElement.querySelector('.popup');
+      var popupCloseButton = popup.querySelector('.popup__close');
+
+      popupCloseButton.addEventListener('click', function () {
+        popup.remove();
+      });
     }
     target = target.parentElement;
   }
