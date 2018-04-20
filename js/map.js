@@ -253,6 +253,10 @@ var onMapPinClick = function (evt) {
     } else if (!target.parentElement.classList.contains('map__pin--main') || target.parentElement.classList.contains('map__pin')) {
       var cardElement = template.content.querySelector('.map__card').cloneNode(true);
       var photoElement = cardElement.querySelector('.popup__photo');
+      var existPopup = mapElement.querySelector('.popup');
+      if (existPopup) {
+        existPopup.remove();
+      }
 
       renderAdCard(ads[target.parentElement.dataset.indexOfPin], cardElement, photoElement);
       mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
