@@ -46,8 +46,11 @@
   var room = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
   var capacityOptions = capacity.querySelectorAll('option');
+  for (var i = 1; i < capacityOptions.length; i++) {
+    capacityOptions[i].disabled = true;
+  }
   var enableOptions = function (index) {
-    var i = 0;
+    i = 0;
     while (i < index + 1) {
       capacityOptions[i].disabled = false;
       i++;
@@ -56,7 +59,9 @@
 
   var onRoomChange = function (evt) {
     var index = evt.currentTarget.selectedIndex;
-    for (var i = 0; i < capacity.length; i++) {
+    capacity.selectedIndex = index;
+
+    for (i = 0; i < capacity.length; i++) {
       capacityOptions[i].disabled = true;
     }
     if (index < 3) {
@@ -68,4 +73,3 @@
 
   room.addEventListener('change', onRoomChange);
 })();
-
