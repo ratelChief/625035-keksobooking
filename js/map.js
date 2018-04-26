@@ -225,8 +225,46 @@ var WIDTH_OF_MAIN_PIN = 160;
 var HEIGHT_OF_MAIN_PIN = 160;
 
 var onMainPinClick = function (evt) {
-  activatePage();
-  startAddress.value = getStartAddress(evt);
+  if (mapElement.classList.contains('map--faded')) {
+    activatePage();
+    startAddress.value = getStartAddress(evt);
+  }
+  var mainPin = document.querySelector('.map__pin--main');
+
+  mainPin.addEventListener('mousedown', function (mevt) {
+    mevt.preventDefault();
+
+    var startCoords = {
+      x: mevt.clientX,
+      y: mevt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      startAddress.value = getStartAddress(evt);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
 };
 
 var getStartAddress = function (evt) {
@@ -250,7 +288,7 @@ var onMapPinClick = function (evt) {
   while (target.parentElement !== currentTarget) {
     if (target.parentElement.classList.contains('map__pin--main')) {
       onMainPinClick(evt);
-    } else if (!target.parentElement.classList.contains('map__pin--main') || target.parentElement.classList.contains('map__pin')) {
+    } else if (!target.parentElement.classList.contains('map__pin--main') && target.parentElement.classList.contains('map__pin')) {
       var cardElement = template.content.querySelector('.map__card').cloneNode(true);
       var photoElement = cardElement.querySelector('.popup__photo');
       var existPopup = mapElement.querySelector('.popup');
