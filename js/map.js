@@ -225,10 +225,10 @@ var WIDTH_OF_MAIN_PIN = 160;
 var HEIGHT_OF_MAIN_PIN = 160;
 
 var onMainPinClick = function (evt) {
-  if (mapElement.classList.contains('map--faded')) {
-    activatePage();
-    startAddress.value = getStartAddress(evt);
-  }
+
+  activatePage();
+  startAddress.value = getStartAddress(evt);
+
   var mainPin = document.querySelector('.map__pin--main');
 
   mainPin.addEventListener('mousedown', function (mevt) {
@@ -256,7 +256,7 @@ var onMainPinClick = function (evt) {
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      startAddress.value = getStartAddress(evt);
+      startAddress.value = getStartAddress(upEvt);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
