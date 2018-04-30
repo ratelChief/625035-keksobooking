@@ -228,7 +228,7 @@ var mainPin = document.querySelector('.map__pin--main');
 
 mainPin.addEventListener('mousedown', function (mevt) {
   activatePage();
-  getAddress(mevt);
+  getAddress(mainPin);
   mevt.preventDefault();
 
   var startCoords = {
@@ -270,7 +270,7 @@ mainPin.addEventListener('mousedown', function (mevt) {
       address.value = parseInt(mainPin.offsetLeft + MAIN_PIN_SIZE / 2, 10) + ', ' + parseInt(mapElement.offsetHeight - mapFilters.offsetHeight - MAIN_PIN_SIZE - MAIN_PIN_SHARP_END, 10);
     }
 
-    address.value = getAddress(moveEvt);
+    address.value = getAddress(mainPin);
   };
 
   var onMouseUp = function (upEvt) {
@@ -284,12 +284,11 @@ mainPin.addEventListener('mousedown', function (mevt) {
   document.addEventListener('mouseup', onMouseUp);
 });
 
-var getAddress = function (evt) {
-  var AddressCoords = {
-    x: Math.round(parseInt(evt.target.parentElement.style.left, 10) + (MAIN_PIN_SIZE / 2)),
-    y: Math.round(parseInt(evt.target.parentElement.style.top, 10) + (MAIN_PIN_SIZE + MAIN_PIN_SHARP_END))
-  };
-  return AddressCoords.x + ', ' + AddressCoords.y;
+var getAddress = function (pinElem) {
+  var x = Math.round(parseInt(pinElem.style.left, 10) + (MAIN_PIN_SIZE / 2));
+  var y = Math.round(parseInt(pinElem.style.top, 10) + (MAIN_PIN_SIZE + MAIN_PIN_SHARP_END));
+
+  return x + ', ' + y;
 };
 
 var activatePage = function () {
@@ -297,7 +296,7 @@ var activatePage = function () {
   form.classList.remove('ad-form--disabled');
   setFormState('enabled');
   document.querySelector('.map__pins').appendChild(fragment);
-  address.value = Math.round(parseInt(mainPin.offsetLeft + MAIN_PIN_SIZE / 2, 10)) + ', ' + Math.round(parseInt(mainPin.offsetTop + MAIN_PIN_SIZE + MAIN_PIN_SHARP_END, 10));
+  address.value = getAddress(mainPin);
 };
 
 var onMapPinClick = function (evt) {
