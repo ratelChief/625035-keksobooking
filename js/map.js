@@ -228,7 +228,6 @@ var mainPin = document.querySelector('.map__pin--main');
 
 mainPin.addEventListener('mousedown', function (mevt) {
   activatePage();
-  getAddress(mainPin);
   mevt.preventDefault();
 
   var startCoords = {
@@ -252,22 +251,18 @@ mainPin.addEventListener('mousedown', function (mevt) {
 
     if (mainPin.offsetTop < 0) {
       mainPin.style.top = 0 + 'px';
-      address.value = parseInt(mainPin.offsetLeft + MAIN_PIN_SIZE / 2, 10) + ', ' + parseInt(MAIN_PIN_SIZE + MAIN_PIN_SHARP_END, 10);
     }
 
     if ((mainPin.offsetLeft + MAIN_PIN_SIZE / 2) < 0) {
       mainPin.style.left = 0 - MAIN_PIN_SIZE / 2 + 'px';
-      address.value = '1, ' + parseInt(mainPin.offsetTop + MAIN_PIN_SIZE + MAIN_PIN_SHARP_END, 10);
     }
 
     if (mainPin.offsetLeft + MAIN_PIN_SIZE / 2 > mapElement.offsetWidth) {
       mainPin.style.left = mapElement.offsetWidth - MAIN_PIN_SIZE / 2 + 'px';
-      address.value = parseInt(mapElement.offsetWidth, 10) + ', ' + parseInt(mainPin.offsetTop + MAIN_PIN_SIZE + MAIN_PIN_SHARP_END, 10);
     }
 
     if (mainPin.offsetTop + MAIN_PIN_SIZE + MAIN_PIN_SHARP_END > mapElement.offsetHeight - mapFilters.offsetHeight) {
       mainPin.style.top = mapElement.offsetHeight - mapFilters.offsetHeight - MAIN_PIN_SIZE - MAIN_PIN_SHARP_END + 'px';
-      address.value = parseInt(mainPin.offsetLeft + MAIN_PIN_SIZE / 2, 10) + ', ' + parseInt(mapElement.offsetHeight - mapFilters.offsetHeight - MAIN_PIN_SIZE - MAIN_PIN_SHARP_END, 10);
     }
 
     address.value = getAddress(mainPin);
