@@ -1,7 +1,6 @@
 'use strict';
-
-window.pin = (function () {
-  return {
+(function () {
+  window.pin = {
     createPinElement: function (ad, template) {
       var pinElement = template.cloneNode(true);
       var imageElement = pinElement.querySelector('img');

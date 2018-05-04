@@ -1,18 +1,41 @@
 'use strict';
 (function () {
-  window.data = (function () {
-    return {
-      TITLES: ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'],
-      TYPES: ['palace', 'flat', 'house', 'bungalo'],
-      CHECKINS: ['12:00', '13:00', '14:00'],
-      CHECKOUTS: ['12:00', '13:00', '14:00'],
-      FEATURES: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-      PHOTOS: ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'],
-      MAIN_PIN_SIZE: 65,
-      MAIN_PIN_SHARP_END: 20,
-      ads: []
-    };
-  })();
+  window.data = {
+    TITLES: ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'],
+    TYPES: ['palace', 'flat', 'house', 'bungalo'],
+    CHECKINS: ['12:00', '13:00', '14:00'],
+    CHECKOUTS: ['12:00', '13:00', '14:00'],
+    FEATURES: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
+    PHOTOS: ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'],
+    MAIN_PIN_SIZE: 65,
+    MAIN_PIN_SHARP_END: 20,
+    ads: [],
+    createAd: function (adsCount) {
+      for (var i = 0; i < adsCount; i++) {
+        var ad = {
+          author: {},
+          offer: {},
+          location: {}
+        };
+        ad.location.x = getX();
+        ad.location.y = getY();
+        ad.author.avatar = getAvatar(i);
+        ad.offer.title = getTitle(window.data.TITLES, i);
+        ad.offer.price = getPrice();
+        ad.offer.type = getType(window.data.TYPES);
+        ad.offer.rooms = getRooms();
+        ad.offer.guests = getGuests();
+        ad.offer.checkin = getChekins(window.data.CHECKINS);
+        ad.offer.checkout = getCheckouts(window.data.CHECKOUTS);
+        ad.offer.features = getFeatures(window.data.FEATURES);
+        ad.offer.address = getAdress(ad, ad.location.x, ad.location.y);
+        ad.offer.photos = window.data.PHOTOS;
+        ad.offer.description = ' ';
+        ad.index = i;
+        window.data.ads.push(ad);
+      }
+    }
+  };
 
   var getRandomValue = function (min, max) {
     return Math.floor(min + Math.random() * (max + 1 - min));
@@ -93,31 +116,4 @@
     return address;
   };
 
-  var createAd = function (adsCount) {
-    for (var i = 0; i < adsCount; i++) {
-      var ad = {
-        author: {},
-        offer: {},
-        location: {}
-      };
-      ad.location.x = getX();
-      ad.location.y = getY();
-      ad.author.avatar = getAvatar(i);
-      ad.offer.title = getTitle(window.data.TITLES, i);
-      ad.offer.price = getPrice();
-      ad.offer.type = getType(window.data.TYPES);
-      ad.offer.rooms = getRooms();
-      ad.offer.guests = getGuests();
-      ad.offer.checkin = getChekins(window.data.CHECKINS);
-      ad.offer.checkout = getCheckouts(window.data.CHECKOUTS);
-      ad.offer.features = getFeatures(window.data.FEATURES);
-      ad.offer.address = getAdress(ad, ad.location.x, ad.location.y);
-      ad.offer.photos = window.data.PHOTOS;
-      ad.offer.description = ' ';
-      ad.index = i;
-      window.data.ads.push(ad);
-    }
-  };
-
-  createAd(8);
 })();

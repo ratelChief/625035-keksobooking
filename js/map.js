@@ -1,6 +1,8 @@
 'use strict';
 (function () {
 
+  window.data.createAd(8);
+
   var template = document.querySelector('template');
 
   var pinElement = template.content.querySelector('.map__pin');
