@@ -4,7 +4,6 @@
   var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
   var mapElement = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
-  var formFieldsEl = form.querySelectorAll('fieldset');
   var mapEl = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
   var successModalEl = document.querySelector('.success');
@@ -17,13 +16,7 @@
     el.style.left = coords.x;
     el.style.top = coords.y;
   };
-  var disableForm = function () {
-    form.classList.add('ad-form--disabled');
 
-    formFieldsEl.forEach(function (field) {
-      field.disabled = true;
-    });
-  };
   var disableMap = function () {
     if (!mapEl.classList.contains('map--faded')) {
       mapEl.classList.add('map--faded');
@@ -40,6 +33,7 @@
     for (var i = 0; i < disabledFields.length; i++) {
       var disabledInput = disabledFields[i];
       if (switcher === 'disabled') {
+        form.classList.add('ad-form--disabled');
         disabledInput.disabled = true;
       } else {
         disabledInput.disabled = false;
@@ -123,7 +117,7 @@
     form.reset();
     setInitCoords(mainPin, mainPinInitCoord);
     getAddress(mainPin);
-    disableForm();
+    setFormState('disabled');
     disableMap();
   };
 
