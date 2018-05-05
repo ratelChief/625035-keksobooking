@@ -1,7 +1,6 @@
 'use strict';
 (function () {
   var URL_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
-  var MESSAGE_TIMEOUT = 5000;
 
   var template = document.querySelector('template');
   var pinElement = template.content.querySelector('.map__pin');
@@ -13,7 +12,6 @@
 
   var mapPins = document.querySelector('.map__pins');
   var mapElement = document.querySelector('.map');
-  var mainPinEl = document.querySelector('.map__pin--main');
 
   var onMapPinClick = function (evt) {
     var target = evt.target;
@@ -83,7 +81,7 @@
   };
 
   var onXHRError = function (errorMessage) {
-    showErrorMessage(errorMessage, MESSAGE_TIMEOUT);
+    showErrorMessage(errorMessage, window.data.MESSAGE_TIMEOUT);
   };
 
   window.backend.load({
