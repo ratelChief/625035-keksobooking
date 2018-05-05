@@ -1,12 +1,13 @@
 'use strict';
 (function () {
+  var URL_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
+  var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
+  var MESSAGE_TIMEOUT = 5000;
 
-  window.data.createAd(8);
+
 
   var template = document.querySelector('template');
-
   var pinElement = template.content.querySelector('.map__pin');
-
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < window.data.ads.length; i++) {
@@ -15,6 +16,7 @@
 
   var mapPins = document.querySelector('.map__pins');
   var mapElement = document.querySelector('.map');
+  var mainPinEl = document.querySelector('.map__pin--main');
 
   var onMapPinClick = function (evt) {
     var target = evt.target;
@@ -43,4 +45,53 @@
 
   mapPins.addEventListener('click', onMapPinClick);
 
+  var setMessageTimeout = function (messageEl, timeout) {
+    if (timeout) {
+      var timeoutID = setTimeout(function () {
+        window.util.removeElement(messageEl);
+        clearTimeout(timeoutID);
+      }, timeout);
+    }
+  };
+
+  var showErrorMessage = function (error, showTime) {
+    var messageNode = document.createElement('div');
+
+    messageNode.id = 'error';
+    messageNode.style.position = 'fixed';
+    messageNode.style.zIndex = '100';
+    messageNode.style.left = 0;
+    messageNode.style.right = 0;
+    messageNode.style.margin = '0 auto';
+    messageNode.style.padding = '5px';
+    messageNode.style.fontSize = '24px';
+    messageNode.style.color = 'white';
+    messageNode.style.textAlign = 'center';
+    messageNode.style.backgroundColor = 'red';
+    messageNode.textContent = error;
+
+    var prevError = document.querySelector('#error');
+
+    if (prevError) {
+      window.util.removeElement(prevError);
+    }
+
+    document.body.insertAdjacentElement('afterbegin', messageNode);
+    setMessageTimeout(messageNode, showTime);
+  };
+
+  var onXHRSuccess = function (data) {
+    console.log(data);
+    window.data.createAd(data);
+  };
+
+  var onXHRError = function (errorMessage) {
+    showErrorMessage(errorMessage, MESSAGE_TIMEOUT);
+  };
+
+  window.backend.load({
+    url: URL_DOWNLOAD,
+    onLoad: onXHRSuccess,
+    onError: onXHRError
+  });
 })();

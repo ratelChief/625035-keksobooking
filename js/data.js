@@ -1,36 +1,30 @@
 'use strict';
 (function () {
   window.data = {
-    TITLES: ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'],
-    TYPES: ['palace', 'flat', 'house', 'bungalo'],
-    CHECKINS: ['12:00', '13:00', '14:00'],
-    CHECKOUTS: ['12:00', '13:00', '14:00'],
-    FEATURES: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-    PHOTOS: ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'],
     MAIN_PIN_SIZE: 65,
     MAIN_PIN_SHARP_END: 20,
     ads: [],
-    createAd: function (adsCount) {
-      for (var i = 0; i < adsCount; i++) {
+    createAd: function (settings) {
+      for (var i = 0; i < settings.length; i++) {
         var ad = {
           author: {},
           offer: {},
           location: {}
         };
-        ad.location.x = getX();
-        ad.location.y = getY();
-        ad.author.avatar = getAvatar(i);
-        ad.offer.title = getTitle(window.data.TITLES, i);
-        ad.offer.price = getPrice();
-        ad.offer.type = getType(window.data.TYPES);
-        ad.offer.rooms = getRooms();
-        ad.offer.guests = getGuests();
-        ad.offer.checkin = getChekins(window.data.CHECKINS);
-        ad.offer.checkout = getCheckouts(window.data.CHECKOUTS);
-        ad.offer.features = getFeatures(window.data.FEATURES);
-        ad.offer.address = getAdress(ad, ad.location.x, ad.location.y);
-        ad.offer.photos = window.data.PHOTOS;
-        ad.offer.description = ' ';
+        ad.location.x = settings.location.x;
+        ad.location.y = settings.location.y;
+        ad.author.avatar = settings.author.avatar;
+        ad.offer.title = settings.offer.title;
+        ad.offer.price = settings.offer.price;
+        ad.offer.type = settings.offer.type;
+        ad.offer.rooms = settings.offer.rooms;
+        ad.offer.guests = settings.offer.guests;
+        ad.offer.checkin = settings.offer.checkin;
+        ad.offer.checkout = settings.offer.checkout;
+        ad.offer.features = settings.offer.features;
+        ad.offer.address = settings.offer.address;
+        ad.offer.photos = settings.offer.photos;
+        ad.offer.description = settings.offer.description;
         ad.index = i;
         window.data.ads.push(ad);
       }
