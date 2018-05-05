@@ -1,10 +1,7 @@
 'use strict';
 (function () {
   var URL_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
-  var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
   var MESSAGE_TIMEOUT = 5000;
-
-
 
   var template = document.querySelector('template');
   var pinElement = template.content.querySelector('.map__pin');

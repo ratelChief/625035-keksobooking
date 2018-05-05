@@ -1,11 +1,13 @@
 'use strict';
 
 (function () {
+  var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
   var mapElement = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
   var formFieldsEl = form.querySelectorAll('fieldset');
   var mapEl = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
+  var successModalEl = document.querySelector('.success');
 
   var mainPinInitCoord = {
     x: mainPin.style.left,
@@ -49,7 +51,6 @@
 
   var address = form.querySelector('#address');
   var mapFilters = document.querySelector('.map__filters-container');
-
 
   mainPin.addEventListener('mousedown', function (mevt) {
     activatePage();
@@ -125,6 +126,84 @@
     disableForm();
     disableMap();
   };
+
+  var setMessageTimeout = function (messageEl, timeout) {
+    if (timeout) {
+      var timeoutID = setTimeout(function () {
+        window.util.removeElement(messageEl);
+        clearTimeout(timeoutID);
+      }, timeout);
+    }
+  };
+
+  var showErrorMessage = function (error, showTime) {
+    var messageNode = document.createElement('div');
+
+    messageNode.id = 'error';
+    messageNode.style.position = 'fixed';
+    messageNode.style.zIndex = '100';
+    messageNode.style.left = 0;
+    messageNode.style.right = 0;
+    messageNode.style.margin = '0 auto';
+    messageNode.style.padding = '5px';
+    messageNode.style.fontSize = '24px';
+    messageNode.style.color = 'white';
+    messageNode.style.textAlign = 'center';
+    messageNode.style.backgroundColor = 'red';
+    messageNode.textContent = error;
+
+    var prevError = document.querySelector('#error');
+
+    if (prevError) {
+      window.util.removeElement(prevError);
+    }
+
+    document.body.insertAdjacentElement('afterbegin', messageNode);
+    setMessageTimeout(messageNode, showTime);
+  };
+
+  var showSubmitMessage = function (messageNode, timeout) {
+    var hideSubmitMessage = function () {
+      window.util.toggleModal(messageNode);
+      clearTimeout(timeoutID);
+      document.removeEventListener('keydown', onSubmitMessageEscPress);
+    };
+
+    var onSubmitMessageEscPress = function (evt) {
+      evt.preventDefault();
+
+      if (window.util.isEscPressed(evt)) {
+        hideSubmitMessage();
+      }
+    };
+
+    window.util.toggleModal(messageNode);
+    document.addEventListener('keydown', onSubmitMessageEscPress);
+
+    var timeoutID = setTimeout(function () {
+      hideSubmitMessage();
+    }, timeout);
+  };
+
+  var onXHRError = function (errorMessage) {
+    showErrorMessage(errorMessage, window.data.MESSAGE_TIMEOUT);
+  };
+
+  form.addEventListener('submit', function (evt) {
+    var onSubmitSuccess = function () {
+      setInitAppState();
+      showSubmitMessage(successModalEl, window.data.MESSAGE_TIMEOUT);
+    };
+
+    window.backend.save({
+      url: URL_UPLOAD,
+      data: new FormData(evt.target),
+      onLoad: onSubmitSuccess,
+      onError: onXHRError
+    });
+
+    evt.preventDefault();
+  });
 
   var formResetEl = document.querySelector('.ad-form__reset');
 

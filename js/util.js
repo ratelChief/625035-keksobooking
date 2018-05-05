@@ -46,6 +46,10 @@
 
     forEach: function (collection, cb) {
       [].forEach.call(collection, cb);
+    },
+
+    toggleModal: function (modal) {
+      modal.classList.toggle('hidden');
     }
   };
 })();
