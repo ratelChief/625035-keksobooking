@@ -24,8 +24,10 @@
         if (existPopup) {
           existPopup.remove();
         }
+        debugger;
         window.card.renderAdCard(window.data.ads[target.parentElement.dataset.indexOfPin], cardElement, photoElement);
         mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+
         var popup = mapElement.querySelector('.popup');
         var popupCloseButton = popup.querySelector('.popup__close');
 

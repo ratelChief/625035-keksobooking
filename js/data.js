@@ -7,25 +7,26 @@
     ads: [],
     createAd: function (settings) {
       for (var i = 0; i < settings.length; i++) {
+        var settingsItem = settings[i];
         var ad = {
           author: {},
           offer: {},
           location: {}
         };
-        ad.location.x = settings.location.x;
-        ad.location.y = settings.location.y;
-        ad.author.avatar = settings.author.avatar;
-        ad.offer.title = settings.offer.title;
-        ad.offer.price = settings.offer.price;
-        ad.offer.type = settings.offer.type;
-        ad.offer.rooms = settings.offer.rooms;
-        ad.offer.guests = settings.offer.guests;
-        ad.offer.checkin = settings.offer.checkin;
-        ad.offer.checkout = settings.offer.checkout;
-        ad.offer.features = settings.offer.features;
-        ad.offer.address = settings.offer.address;
-        ad.offer.photos = settings.offer.photos;
-        ad.offer.description = settings.offer.description;
+        ad.location.x = settingsItem.location.x;
+        ad.location.y = settingsItem.location.y;
+        ad.author.avatar = settingsItem.author.avatar;
+        ad.offer.title = settingsItem.offer.title;
+        ad.offer.price = settingsItem.offer.price;
+        ad.offer.type = settingsItem.offer.type;
+        ad.offer.rooms = settingsItem.offer.rooms;
+        ad.offer.guests = settingsItem.offer.guests;
+        ad.offer.checkin = settingsItem.offer.checkin;
+        ad.offer.checkout = settingsItem.offer.checkout;
+        ad.offer.features = settingsItem.offer.features;
+        ad.offer.address = settingsItem.offer.address;
+        ad.offer.photos = settingsItem.offer.photos;
+        ad.offer.description = settingsItem.offer.description;
         ad.index = i;
         window.data.ads.push(ad);
       }

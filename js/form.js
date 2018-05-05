@@ -20,12 +20,10 @@
   var disableMap = function () {
     if (!mapEl.classList.contains('map--faded')) {
       mapEl.classList.add('map--faded');
-
-      var mapPinsEl = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-
-      mapPinsEl.forEach(function (pin) {
-        window.util.removeElement(pin);
-      });
+//      var mapPinsEl = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+//      mapPinsEl.forEach(function (pin) {
+//        window.util.removeElement(pin);
+//      });
     }
   };
   var setFormState = function (switcher) {
@@ -111,6 +109,7 @@
     form.classList.remove('ad-form--disabled');
     setFormState('enabled');
     address.value = getAddress(mainPin);
+    debugger;
   };
 
   var setInitAppState = function () {
@@ -195,7 +194,6 @@
       onLoad: onSubmitSuccess,
       onError: onXHRError
     });
-
     evt.preventDefault();
   });
 
@@ -204,7 +202,6 @@
   formResetEl.addEventListener('click', function (evt) {
     evt.preventDefault();
     setInitAppState();
-
   });
 
 })();
