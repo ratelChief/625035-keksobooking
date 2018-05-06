@@ -25,6 +25,7 @@
 
     pinImgEl.src = data.src;
     pinImgEl.alt = data.alt;
+    pinEl.dataset.indexOfPin = data.id;
     pinEl.style.left = data.location.x + pinWidth / 2 + 'px';
     pinEl.style.top = data.location.y + pinHeight + 'px';
 

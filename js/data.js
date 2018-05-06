@@ -11,7 +11,8 @@
         var ad = {
           author: {},
           offer: {},
-          location: {}
+          location: {},
+          id: i
         };
         ad.location.x = settingsItem.location.x;
         ad.location.y = settingsItem.location.y;

@@ -7,7 +7,6 @@
   var fragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
   var mapElement = document.querySelector('.map');
-  var adData;
 
   var onMapPinClick = function (evt) {
     var target = evt.target;
@@ -20,7 +19,7 @@
         if (existPopup) {
           existPopup.remove();
         }
-        window.card.renderAdCard(adData[target.parentElement.dataset.indexOfPin], cardElement, photoElement);
+        window.card.renderAdCard(window.data.ads[target.parentElement.dataset.indexOfPin], cardElement, photoElement);
         mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
 
         var popup = mapElement.querySelector('.popup');
@@ -73,10 +72,8 @@
   };
 
   var onXHRSuccess = function (data) {
-    adData = data;
-
     window.data.createAd(data);
-    window.renderPins(window.filter(data), PINS_COUNT);
+    window.renderPins(window.filter(window.data.ads), PINS_COUNT);
   };
 
   var onXHRError = function (errorMessage) {
@@ -92,7 +89,7 @@
   var filtersContainer = document.querySelector('.map__filters');
 
   var updatePins = function () {
-    window.renderPins(window.filter(adData), PINS_COUNT);
+    window.renderPins(window.filter(window.data.ads), PINS_COUNT);
   };
 
   filtersContainer.addEventListener('change', function () {
