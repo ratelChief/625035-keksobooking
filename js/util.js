@@ -44,6 +44,15 @@
       return evt.keyCode === this.Keycode.ENTER;
     },
 
+    drainContainer: function (container, selector) {
+      var collection = (selector) ? container.querySelectorAll(selector) : container.querySelectorAll('*');
+      var that = this;
+
+      this.forEach(collection, function (it) {
+        that.removeElement(it);
+      });
+    },
+
     forEach: function (collection, cb) {
       [].forEach.call(collection, cb);
     },
