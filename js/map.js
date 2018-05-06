@@ -20,7 +20,7 @@
         if (existPopup) {
           existPopup.remove();
         }
-        window.card.renderAdCard(window.data.ads[target.parentElement.dataset.indexOfPin], cardElement, photoElement);
+        window.card.renderAdCard(adData[target.parentElement.dataset.indexOfPin], cardElement, photoElement);
         mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
 
         var popup = mapElement.querySelector('.popup');
