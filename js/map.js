@@ -66,7 +66,6 @@
     if (prevError) {
       window.util.removeElement(prevError);
     }
-
     document.body.insertAdjacentElement('afterbegin', messageNode);
     setMessageTimeout(messageNode, showTime);
   };
