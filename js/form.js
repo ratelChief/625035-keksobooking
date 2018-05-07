@@ -2,11 +2,11 @@
 
 (function () {
   var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
-  var mapElement = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
-  var mapEl = document.querySelector('.map');
+  var mapElement = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
   var successModalEl = document.querySelector('.success');
+  var pinsContainerEl = document.querySelector('.map__pins');
 
   var mainPinInitCoord = {
     x: mainPin.style.left,
@@ -18,8 +18,8 @@
   };
 
   var disableMap = function () {
-    if (!mapEl.classList.contains('map--faded')) {
-      mapEl.classList.add('map--faded');
+    if (!mapElement.classList.contains('map--faded')) {
+      mapElement.classList.add('map--faded');
     }
   };
   var setFormState = function (switcher) {
@@ -105,6 +105,7 @@
     form.classList.remove('ad-form--disabled');
     setFormState('enabled');
     address.value = getAddress(mainPin);
+    window.renderPins(window.filter(window.data.ads), window.data.PINS_COUNT);
   };
 
   var setInitAppState = function () {
@@ -113,6 +114,13 @@
     getAddress(mainPin);
     setFormState('disabled');
     disableMap();
+    for (var i = 0; i < window.data.PINS_COUNT; i++) {
+      window.util.removeElement(pinsContainerEl.querySelector('.map__pin:not(.map__pin--main)'));
+    }
+    var existPopup = mapElement.querySelector('.popup');
+    if (existPopup) {
+      existPopup.remove();
+    }
   };
 
   var setMessageTimeout = function (messageEl, timeout) {

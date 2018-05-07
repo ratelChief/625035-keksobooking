@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   window.data = {
+    PINS_COUNT: 5,
     MAIN_PIN_SIZE: 65,
     MAIN_PIN_SHARP_END: 20,
     MESSAGE_TIMEOUT: 5000,
