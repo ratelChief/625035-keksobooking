@@ -165,7 +165,7 @@
     var onSubmitMessageEscPress = function (evt) {
       evt.preventDefault();
 
-      window.util.isEscPressed(evt, hideSubmitMessage());
+      window.util.isEscPressed(evt, hideSubmitMessage);
     };
 
     window.util.toggleModal(messageNode);
