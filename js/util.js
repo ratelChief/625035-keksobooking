@@ -18,12 +18,6 @@
       }
     },
 
-    isEnterPressed: function (evt, action) {
-      if (evt.keyCode === this.Keycode.ENTER) {
-        action();
-      }
-    },
-
     drainContainer: function (container, selector) {
       var collection = (selector) ? container.querySelectorAll(selector) : container.querySelectorAll('*');
       var that = this;

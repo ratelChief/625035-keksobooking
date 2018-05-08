@@ -7,10 +7,6 @@
   var mapPins = document.querySelector('.map__pins');
   var mapElement = document.querySelector('.map');
 
-  var onMapPinEnter = function (evt) {
-    window.util.isEnterPressed(evt, onMapPinClick);
-  };
-
   var onMapPinClick = function (evt) {
     var target = evt.target;
     var currentTarget = evt.currentTarget;
@@ -28,12 +24,6 @@
         var popup = mapElement.querySelector('.popup');
         var popupCloseButton = popup.querySelector('.popup__close');
 
-        popup.addEventListener('keydown', function () {
-          window.util.isEscPressed(evt, function () {
-            popup.remove();
-          });
-        });
-
         popupCloseButton.addEventListener('click', function () {
           popup.remove();
         });
@@ -43,7 +33,6 @@
     mapPins.appendChild(fragment);
   };
 
-  mapPins.addEventListener('keydown', onMapPinEnter);
   mapPins.addEventListener('click', onMapPinClick);
 
   var setMessageTimeout = function (messageEl, timeout) {
