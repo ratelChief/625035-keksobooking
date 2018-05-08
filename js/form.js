@@ -2,11 +2,11 @@
 
 (function () {
   var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
-  var mapElement = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
-  var mapEl = document.querySelector('.map');
+  var mapElement = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
   var successModalEl = document.querySelector('.success');
+  var pinsContainerEl = document.querySelector('.map__pins');
 
   var mainPinInitCoord = {
     x: mainPin.style.left,
@@ -18,21 +18,18 @@
   };
 
   var disableMap = function () {
-    if (!mapEl.classList.contains('map--faded')) {
-      mapEl.classList.add('map--faded');
+    if (!mapElement.classList.contains('map--faded')) {
+      mapElement.classList.add('map--faded');
     }
   };
   var setFormState = function (switcher) {
     var disabledFields = form.querySelectorAll('fieldset');
-    for (var i = 0; i < disabledFields.length; i++) {
-      var disabledInput = disabledFields[i];
-      if (switcher === 'disabled') {
+    disabledFields.forEach(function (elem) {
+      elem.disabled = switcher === 'disabled';
+      if (elem.disabled) {
         form.classList.add('ad-form--disabled');
-        disabledInput.disabled = true;
-      } else {
-        disabledInput.disabled = false;
       }
-    }
+    });
   };
 
   setFormState('disabled');
@@ -105,6 +102,7 @@
     form.classList.remove('ad-form--disabled');
     setFormState('enabled');
     address.value = getAddress(mainPin);
+    window.renderPins(window.filter(window.data.ads), window.data.PINS_COUNT);
   };
 
   var setInitAppState = function () {
@@ -113,6 +111,13 @@
     getAddress(mainPin);
     setFormState('disabled');
     disableMap();
+    pinsContainerEl.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (elem) {
+      window.util.removeElement(elem);
+    });
+    var existPopup = mapElement.querySelector('.popup');
+    if (existPopup) {
+      existPopup.remove();
+    }
   };
 
   var setMessageTimeout = function (messageEl, timeout) {
@@ -160,9 +165,7 @@
     var onSubmitMessageEscPress = function (evt) {
       evt.preventDefault();
 
-      if (window.util.isEscPressed(evt)) {
-        hideSubmitMessage();
-      }
+      window.util.isEscPressed(evt, hideSubmitMessage());
     };
 
     window.util.toggleModal(messageNode);
