@@ -24,15 +24,12 @@
   };
   var setFormState = function (switcher) {
     var disabledFields = form.querySelectorAll('fieldset');
-    for (var i = 0; i < disabledFields.length; i++) {
-      var disabledInput = disabledFields[i];
-      if (switcher === 'disabled') {
+    disabledFields.forEach(function (elem) {
+      elem.disabled = switcher === 'disabled';
+      if (elem.disabled) {
         form.classList.add('ad-form--disabled');
-        disabledInput.disabled = true;
-      } else {
-        disabledInput.disabled = false;
       }
-    }
+    });
   };
 
   setFormState('disabled');
@@ -114,9 +111,9 @@
     getAddress(mainPin);
     setFormState('disabled');
     disableMap();
-    for (var i = 0; i < window.data.PINS_COUNT; i++) {
-      window.util.removeElement(pinsContainerEl.querySelector('.map__pin:not(.map__pin--main)'));
-    }
+    pinsContainerEl.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (elem) {
+      window.util.removeElement(elem);
+    });
     var existPopup = mapElement.querySelector('.popup');
     if (existPopup) {
       existPopup.remove();
@@ -168,9 +165,7 @@
     var onSubmitMessageEscPress = function (evt) {
       evt.preventDefault();
 
-      if (window.util.isEscPressed(evt)) {
-        hideSubmitMessage();
-      }
+      window.util.isEscPressed(evt, hideSubmitMessage());
     };
 
     window.util.toggleModal(messageNode);

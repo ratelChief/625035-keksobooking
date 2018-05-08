@@ -27,9 +27,7 @@
   };
 
   type.addEventListener('change', onTypeChange);
-})();
 
-(function () {
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
 
@@ -45,9 +43,7 @@
 
   timeIn.addEventListener('change', onCheckInTimeChage);
   timeOut.addEventListener('change', onCheckOutTimeChage);
-})();
 
-(function () {
   var room = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
 
