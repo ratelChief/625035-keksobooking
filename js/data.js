@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   window.data = {
+    PINS_COUNT: 5,
     MAIN_PIN_SIZE: 65,
     MAIN_PIN_SHARP_END: 20,
     MESSAGE_TIMEOUT: 5000,
@@ -11,7 +12,8 @@
         var ad = {
           author: {},
           offer: {},
-          location: {}
+          location: {},
+          id: i
         };
         ad.location.x = settingsItem.location.x;
         ad.location.y = settingsItem.location.y;

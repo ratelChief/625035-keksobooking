@@ -3,7 +3,6 @@
   var URL_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
 
   var template = document.querySelector('template');
-  var pinElement = template.content.querySelector('.map__pin');
   var fragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
   var mapElement = document.querySelector('.map');
@@ -31,7 +30,7 @@
       }
       target = target.parentElement;
     }
-    document.querySelector('.map__pins').appendChild(fragment);
+    mapPins.appendChild(fragment);
   };
 
   mapPins.addEventListener('click', onMapPinClick);
@@ -73,9 +72,6 @@
 
   var onXHRSuccess = function (data) {
     window.data.createAd(data);
-    for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(window.pin.createPinElement(window.data.ads[i], pinElement));
-    }
   };
 
   var onXHRError = function (errorMessage) {
@@ -87,4 +83,15 @@
     onLoad: onXHRSuccess,
     onError: onXHRError
   });
+
+  var filtersContainer = document.querySelector('.map__filters');
+
+  var updatePins = function () {
+    window.renderPins(window.filter(window.data.ads), window.data.PINS_COUNT);
+  };
+
+  filtersContainer.addEventListener('change', function () {
+    window.debounce(updatePins);
+  });
+
 })();
